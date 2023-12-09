@@ -46,7 +46,7 @@ class MarcaController extends Controller
     {
         //$marca = Marca::create($request->all());        
 
-        $request->validate($this->marca->rules(),$this->marca->feedback());
+        $request->validate($this->marca->rules(), $this->marca->feedback());
 
         $marca = $this->marca->create($request->all());
 
@@ -97,6 +97,24 @@ class MarcaController extends Controller
 
             return response()->json(['error' => 'Registro Inexistente'], 404);
         }
+
+        if ($request->method('PATCH')) {
+
+            $dinamicRules = [];
+
+            foreach ($marca->rules() as $input => $regra) {
+
+                if (array_key_exists($input, $request->all())) {
+
+                    $dinamicRules[$input] = $regra;
+                }
+            }
+            $request->validate($marca->rules(), $marca->feedback());
+        } else {
+
+            $request->validate($marca->rules(), $marca->feedback());
+        }
+
         $marca->update($request->all());
         return $marca;
     }

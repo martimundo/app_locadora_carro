@@ -20,7 +20,7 @@ class Modelo extends Model
         'abs'
     ];
 
-    public function marcas(): HasOne
+    public function marca(): HasOne
     {
         return $this->hasOne(Marca::class);
     }
