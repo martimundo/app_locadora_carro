@@ -8,6 +8,13 @@ use App\Http\Requests\UpdateCarroRequest;
 
 class CarroController extends Controller
 {
+    private $carro;
+
+    public function __construct(Carro $carro)
+    {
+        $this->carro = $carro;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,8 @@ class CarroController extends Controller
      */
     public function index()
     {
-        echo "Cheguei no index o Carro";
+        $carros = $this->carro->all();
+        return $carros;
     }
 
     /**
@@ -36,7 +44,11 @@ class CarroController extends Controller
      */
     public function store(StoreCarroRequest $request)
     {
-        //
+
+        $request->validate($request->rules());
+
+        $carro = $this->carro->create($request->all());
+        return response()->json($carro, 201);
     }
 
     /**
@@ -45,9 +57,15 @@ class CarroController extends Controller
      * @param  \App\Models\Carro  $carro
      * @return \Illuminate\Http\Response
      */
-    public function show(Carro $carro)
+    public function show($id)
     {
-        //
+        $carro = $this->carro->find($id);
+
+        if ($carro == null) {
+            return "Veiculo não encontardo";
+        }
+
+        return response()->json($carro, 200);
     }
 
     /**
@@ -68,9 +86,17 @@ class CarroController extends Controller
      * @param  \App\Models\Carro  $carro
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCarroRequest $request, Carro $carro)
+    public function update(UpdateCarroRequest $request, $id)
     {
-        //
+        $carro = $this->carro->find($id);
+
+        if ($carro === null) {
+            return response()->json(['error' => 'O veiculo não existe'], 404);
+        }
+
+        $carro->update($request->all());
+
+        return $carro;
     }
 
     /**
@@ -79,8 +105,15 @@ class CarroController extends Controller
      * @param  \App\Models\Carro  $carro
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Carro $carro)
+    public function destroy($id)
     {
-        //
+        $carro = $this->carro->find($id);
+
+        if ($carro === null) {
+            return response()->json(['error' => 'Não é possivel remover o carro'], 404);
+        }
+        $carro->delete($id);
+
+        return response()->json(['success'=>'Veiculo removido com sucesso'], 200);
     }
 }

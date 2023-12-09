@@ -13,7 +13,7 @@ class StoreCarroRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreCarroRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'placa'=>'required|unique:carros|max:8',
+            'km'=>'required'
         ];
     }
 }

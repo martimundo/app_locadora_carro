@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class ModeloController extends Controller
 {
+    private $modelo;
+
+
+    public function __construct(Modelo $modelo)
+    {
+        $this->modelo = $modelo;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,8 @@ class ModeloController extends Controller
      */
     public function index()
     {
-        //
+        $modelo = $this->modelo->all();
+        return $modelo;
     }
 
     /**
@@ -35,7 +44,9 @@ class ModeloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $modelo = $this->modelo->create($request->all());
+        
+        return response()->json($modelo, 201);
     }
 
     /**
@@ -46,7 +57,7 @@ class ModeloController extends Controller
      */
     public function show(Modelo $modelo)
     {
-        //
+        
     }
 
     /**

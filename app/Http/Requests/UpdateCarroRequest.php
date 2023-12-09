@@ -13,7 +13,7 @@ class UpdateCarroRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateCarroRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'placa'=>'required|max:8',
+            'km'=>'required'
         ];
     }
 }
