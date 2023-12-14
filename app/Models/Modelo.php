@@ -24,4 +24,28 @@ class Modelo extends Model
     {
         return $this->hasOne(Marca::class);
     }
+
+    public function rules()
+    {
+        return [
+
+            'marca_id'=>'exists:marcas,id',
+            'nome' => "required|min:3|unique:modelos,nome,".$this->id,
+            'imagem' => 'required|file|mimes:png,jpg,jpeg,webp',
+            'numero_portas'=>'required|integer|digits_between:1,5',
+            'lugares'=>'required|integer|digits_between:1,20',
+            'air_bag'=>'required|boolean',
+            'abs'=>'required|boolean'
+            
+        ];
+    }
+
+    public function feedback()
+    {
+        return [
+
+            'required' => 'O campo :attribute é obrigatório',
+            'nome.min'=>'O modelo dever ter no minimo 3 caracteres.'
+        ];
+    }
 }
