@@ -31,7 +31,7 @@ class Modelo extends Model
 
             'marca_id'=>'exists:marcas,id',
             'nome' => "required|min:3|unique:modelos,nome,".$this->id,
-            'imagem' => 'required|file|mimes:png,jpg,jpeg,webp',
+            'imagem' => 'required|file|mimes:png,jpg,jpeg,webp,svg,bitmap,gif',
             'numero_portas'=>'required|integer|digits_between:1,5',
             'lugares'=>'required|integer|digits_between:1,20',
             'air_bag'=>'required|boolean',
@@ -45,7 +45,8 @@ class Modelo extends Model
         return [
 
             'required' => 'O campo :attribute é obrigatório',
-            'nome.min'=>'O modelo dever ter no minimo 3 caracteres.'
+            'nome.min'=>'O modelo dever ter no minimo 3 caracteres.',
+            'imagem.file'=>'O tipo de arquivo não é válido',
         ];
     }
 }

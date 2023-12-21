@@ -22,4 +22,25 @@ class Carro extends Model
 
         return $this->hasOne(Modelo::class);
     }
+
+    public function rules(){
+        return[
+
+            "modelo_id"=>"required|unique:modelos,nome".$this->id,
+            "placa"=>"required|max:8",
+            "disponivel"=>"required|boolean",
+            "km"=>"required"
+
+        ];
+
+    }
+    public function feedback(){
+        return[
+
+            "required"=>"O campo :attribute é obrigatório",
+            "placa.max"=>"A placa não pode ter mais que 8 caracteres",
+            
+        ];
+    }
+
 }

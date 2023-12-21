@@ -103,6 +103,8 @@ class ModeloController extends Controller
     {
         $modelo = $this->modelo->find($id);
 
+        //dd($modelo->find($id));
+
         if ($modelo === null) {
 
             return response()->json(['error' => 'Registro Inexistente'], 404);

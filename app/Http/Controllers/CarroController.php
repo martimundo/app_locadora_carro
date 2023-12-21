@@ -90,11 +90,36 @@ class CarroController extends Controller
     {
         $carro = $this->carro->find($id);
 
+        //dd($request->all());
+
         if ($carro === null) {
+
             return response()->json(['error' => 'O veiculo não existe'], 404);
         }
 
-        $carro->update($request->all());
+        if($request->method['PATCH']){
+
+            $dinamicRules=[];
+
+            foreach($carro->rules() as $input => $regra){
+
+                if(array_key_exists($input, $request->all())){
+
+                    $dinamicRules[$input]=$regra;
+                }
+                $request->validate($carro->rules(), $carro->feedback());
+            }            
+        }else{
+
+            $request->validate($carro->rules(), $carro->feedback());
+        }
+        $carro->update([
+
+            'modelo_id',
+            'placa',
+            'disponivel',
+            'km'
+        ]);
 
         return $carro;
     }
