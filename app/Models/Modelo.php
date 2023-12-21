@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Modelo extends Model
@@ -20,10 +21,15 @@ class Modelo extends Model
         'abs'
     ];
 
-    public function marca(): HasOne
+    /**
+     * Relacionamentos
+    */
+
+    //Pertence a 1 marca
+    public function marca(): BelongsTo
     {
-        return $this->hasOne(Marca::class);
-    }
+        return $this->belongsTo(Marca::class);
+    }    
 
     public function rules()
     {

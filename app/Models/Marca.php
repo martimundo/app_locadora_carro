@@ -11,6 +11,12 @@ class Marca extends Model
 
     protected $fillable = ['nome', 'imagem'];
 
+    //tem muitas modelos
+    public function modelos()
+    {
+        return $this->hasMany(Modelo::class);
+    }
+
     public function rules()
     {
         return [
@@ -29,4 +35,6 @@ class Marca extends Model
             'nome.min'=>'A marca dever ter no minimo 3 caracteres.'
         ];
     }
+
+    
 }

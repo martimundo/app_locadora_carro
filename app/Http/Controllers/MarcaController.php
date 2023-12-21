@@ -23,7 +23,7 @@ class MarcaController extends Controller
     public function index()
     {
         //$marca = Marca::all();
-        $marca = $this->marca->all();
+        $marca = $this->marca->with('modelos')->get();
         return $marca;
     }
 
@@ -69,7 +69,7 @@ class MarcaController extends Controller
     public function show($id)
     {
         //$marca = Marca::find($marca);
-        $marca = $this->marca->find($id);
+        $marca = $this->marca->with('modelos')->find($id);
 
         if ($marca === null) {
 
